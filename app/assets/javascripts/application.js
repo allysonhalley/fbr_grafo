@@ -11,5 +11,6 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require jquery-turbolinks
+//= require jquery.min
+//= require jquery.turbolinks
 //= require_tree .

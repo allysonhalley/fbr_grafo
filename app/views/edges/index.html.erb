@@ -17,9 +17,9 @@
   <tbody>
     <% @edges.each do |edge| %>
       <tr>
-        <td><%= edge.graph %></td>
-        <td><%= edge.initial_vertex %></td>
-        <td><%= edge.final_vertex %></td>
+        <td><%= edge.graph.name %></td>
+        <td><%= edge.initial_vertex.name %></td>
+        <td><%= edge.final_vertex.name %></td>
         <td><%= edge.time %></td>
         <td><%= edge.distance %></td>
         <td><%= link_to 'Show', edge %></td>
