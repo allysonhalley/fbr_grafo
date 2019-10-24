@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
@@ -40,7 +40,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.29.0'
+  gem 'capybara', '3.15.1'
   #Trying to fix selenium problem
   gem 'rubyzip', '~> 1.2.2'
   gem 'selenium-webdriver'
