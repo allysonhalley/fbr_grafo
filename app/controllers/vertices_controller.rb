@@ -69,6 +69,6 @@ class VerticesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vertex_params
-      params.require(:vertex).permit(:nome)
+      params.require(:vertex).permit(:name)
     end
 end

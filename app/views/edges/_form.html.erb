@@ -1,0 +1,42 @@
+<%= form_with(model: edge, local: true) do |form| %>
+  <% if edge.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(edge.errors.count, "error") %> prohibited this edge from being saved:</h2>
+
+      <ul>
+      <% edge.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :graph_id %>
+    <%= form.text_field :graph_id, id: :edge_graph_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :initial_vertex_id %>
+    <%= form.text_field :initial_vertex_id, id: :edge_initial_vertex_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :final_vertex_id %>
+    <%= form.text_field :final_vertex_id, id: :edge_final_vertex_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.number_field :time, id: :edge_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distance %>
+    <%= form.number_field :distance, id: :edge_distance %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

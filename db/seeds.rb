@@ -24,7 +24,7 @@ Vertex.create!([
     {name: "E"}
 ])
 
-p "Created #{Vertex.count} graphs!"
+p "Created #{Vertex.count} vertices!"
 
 # Insert defaults Edges elements
 Edge.destroy_all
@@ -37,12 +37,14 @@ v_d = Vertex.find_by(name: "D")
 v_e = Vertex.find_by(name: "E")
 
 Edge.create!([
-    {graph: g, initial_vertex: v_a, final_vertex: v_b, tempo: 1, distance: 18},
-    {graph: g, initial_vertex: v_a, final_vertex: v_c, tempo: 6, distance: 3},
-    {graph: g, initial_vertex: v_a, final_vertex: v_d, tempo: 2, distance: 15},
-    {graph: g, initial_vertex: v_b, final_vertex: v_d, tempo: 5, distance: 6},
-    {graph: g, initial_vertex: v_c, final_vertex: v_d, tempo: 3, distance: 12},
-    {graph: g, initial_vertex: v_d, final_vertex: v_e, tempo: 4, distance: 9}
+    {graph: g, initial_vertex: v_a, final_vertex: v_b, time: 1, distance: 18},
+    {graph: g, initial_vertex: v_a, final_vertex: v_c, time: 6, distance: 3},
+    {graph: g, initial_vertex: v_a, final_vertex: v_d, time: 2, distance: 15},
+    {graph: g, initial_vertex: v_b, final_vertex: v_d, time: 5, distance: 6},
+    {graph: g, initial_vertex: v_c, final_vertex: v_d, time: 3, distance: 12},
+    {graph: g, initial_vertex: v_d, final_vertex: v_e, time: 4, distance: 9}
 ])
 
 p "Created #{Edge.count} edges!"
+
+p "Seeds successed!"

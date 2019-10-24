@@ -1,7 +1,7 @@
 class CreateVertices < ActiveRecord::Migration[5.1]
   def change
     create_table :vertices do |t|
-      t.string :nome
+      t.string :name
 
       t.timestamps
     end

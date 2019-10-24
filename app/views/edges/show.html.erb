@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Graph:</strong>
+  <%= @edge.graph %>
+</p>
+
+<p>
+  <strong>Initial vertex:</strong>
+  <%= @edge.initial_vertex %>
+</p>
+
+<p>
+  <strong>Final vertex:</strong>
+  <%= @edge.final_vertex %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @edge.time %>
+</p>
+
+<p>
+  <strong>Distance:</strong>
+  <%= @edge.distance %>
+</p>
+
+<%= link_to 'Edit', edit_edge_path(@edge) %> |
+<%= link_to 'Back', edges_path %>

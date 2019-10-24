@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  graph: one
+  initial_vertex: one
+  final_vertex: one
+  time: 1
+  distance: 1
+
+two:
+  graph: two
+  initial_vertex: two
+  final_vertex: two
+  time: 1
+  distance: 1

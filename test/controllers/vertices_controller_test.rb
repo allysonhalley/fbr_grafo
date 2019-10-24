@@ -17,7 +17,7 @@ class VerticesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create vertex" do
     assert_difference('Vertex.count') do
-      post vertices_url, params: { vertex: { nome: @vertex.nome } }
+      post vertices_url, params: { vertex: { name: @vertex.name } }
     end
 
     assert_redirected_to vertex_url(Vertex.last)
@@ -34,7 +34,7 @@ class VerticesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update vertex" do
-    patch vertex_url(@vertex), params: { vertex: { nome: @vertex.nome } }
+    patch vertex_url(@vertex), params: { vertex: { name: @vertex.name } }
     assert_redirected_to vertex_url(@vertex)
   end
 
