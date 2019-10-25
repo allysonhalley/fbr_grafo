@@ -4,7 +4,9 @@ class GraphsController < ApplicationController
   # GET /graphs
   # GET /graphs.json
   def index
-    @graphs = Graph.all
+    @graph = Graph.find_by(name: 'Alpha')    
+    @vertices = Vertex.all
+    @edges = Edge.all
   end
 
   # GET /graphs/1

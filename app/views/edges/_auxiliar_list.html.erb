@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Initial vertex</th>
+        <th>Final vertex</th>
+        <th>Time</th>
+        <th>Distance</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% edges.each do |edge| %>
+      <tr>
+        <td><%= edge.initial_vertex.name %></td>
+        <td><%= edge.final_vertex.name %></td>
+        <td><%= edge.time %></td>
+        <td><%= edge.distance %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
