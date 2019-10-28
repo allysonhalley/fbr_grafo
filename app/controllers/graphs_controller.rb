@@ -63,6 +63,14 @@ class GraphsController < ApplicationController
     end
   end
 
+  #Start Algoritm
+  def start_algoritm
+    @start_vertex = Vertex.start_vertex
+    @end_vertex = Vertex.end_vertex
+
+    redirect_to graphs_url, notice: 'Algorithm was finalizado.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_graph

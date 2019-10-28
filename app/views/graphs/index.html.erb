@@ -7,4 +7,12 @@
 <div class='col-md-9'>
   <%= render 'edges/auxiliar_list', edges: @edges %>
 </div>
+<%= if %>
+  <div>
+    <%= button_to 'Iniciar Algoritmo', start_algoritm_path %>  
+  </div>
+<%= end %>
 
+<div>
+  <%= button_to 'Iniciar Algoritmo', start_algoritm_path %>  
+</div>

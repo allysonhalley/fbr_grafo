@@ -4,6 +4,13 @@ class EdgesController < ApplicationController
   # GET /edges
   # GET /edges.json
   def index
+
+    # @final_vertex = Edge.group(:final_vertex).all
+    # vertex = Vertex.find_by(name: 'D')
+    # @edges = Edge.equal_final_vertices(vertex)
+    # @edges = Edge.all.group(:final_vertex)
+    # abort @final_vertex.inspect
+    # abort @edges.inspect
     @edges = Edge.all
   end
 

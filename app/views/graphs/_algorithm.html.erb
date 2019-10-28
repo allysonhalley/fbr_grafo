@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Edges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Graph</th>
+      <th>Initial vertex</th>
+      <th>Final vertex</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @edges.each do |edge| %>
+      <tr>
+        <td><%= edge.graph.name %></td>
+        <td><%= edge.initial_vertex.name %></td>
+        <td><%= edge.final_vertex.name %></td>
+        <td><%= edge.time %></td>
+        <td><%= edge.distance %></td>
+        <td><%= link_to 'Show', edge %></td>
+        <td><%= link_to 'Edit', edit_edge_path(edge) %></td>
+        <td><%= link_to 'Destroy', edge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Edge', new_edge_path %>
