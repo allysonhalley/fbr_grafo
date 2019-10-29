@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Graph  - <%= @graph.name %> </h1>
+<h1>Caminhos </h1>
 <div class='col-md-3'>
   <%= render 'vertices/auxiliar_list', vertices: @vertices %>
 </div>
 <div class='col-md-9'>
   <%= render 'edges/auxiliar_list', edges: @edges %>
 </div>
-<div>  
-  <%=link_to( "Caminhos", ways_path, class:"btn btn-default btn-sm") %>   
-</div>  
+<div>
+  <%= button_to 'Melhor tempo', smaller_time_url %>  
+  <%= button_to 'Menor distância', smaller_distance_url %>  
+</div>

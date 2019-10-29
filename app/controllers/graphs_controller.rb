@@ -6,7 +6,7 @@ class GraphsController < ApplicationController
   def index
     @graph = Graph.find_by(name: 'Alpha')    
     @vertices = Vertex.all
-    @edges = Edge.all
+    @edges = Edge.all    
   end
 
   # GET /graphs/1
@@ -61,14 +61,6 @@ class GraphsController < ApplicationController
       format.html { redirect_to graphs_url, notice: 'Graph was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  #Start Algoritm
-  def start_algoritm
-    @start_vertex = Vertex.start_vertex
-    @end_vertex = Vertex.end_vertex
-
-    redirect_to graphs_url, notice: 'Algorithm was finalizado.'
   end
 
   private

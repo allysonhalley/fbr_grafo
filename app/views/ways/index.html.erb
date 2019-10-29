@@ -1,0 +1,23 @@
+<div class="table-responsive">
+  <%=button_to( "Percorrer", :run_ways, class:"btn btn-default btn-sm") %>   
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Vértices</th>
+        <th>Arestas</th>
+        <th>Distância</th>
+        <th>Tempo</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @ways.each do |way| %>
+      <tr>
+        <td><%= way.vertices_list%></td>
+        <td><%= way.edges_list%></td>
+        <td><%= way.total_distance%></td>
+        <td><%= way.total_time%></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

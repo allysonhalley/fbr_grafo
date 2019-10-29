@@ -6,6 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+##############################################################################################################################################
+#############################################################SCRIPTS CREATE TABLE#############################################################
+#rails g scaffold graph name:string
+#rails g scaffold vertex name:string
+#rails g scaffold edge graphgit :references initial_vertex:references final_vertex:references time:integer distance:integer
+#rails g scaffold way vertices_list:text edges_list:text total_distance:integer total_time:integer
+##############################################################################################################################################
+##############################################################################################################################################
+
 # Insert defaults Graphs elements
 Graph.destroy_all
 

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vertices list:</strong>
+  <%= @way.vertices_list %>
+</p>
+
+<p>
+  <strong>Edges list:</strong>
+  <%= @way.edges_list %>
+</p>
+
+<p>
+  <strong>Total distance:</strong>
+  <%= @way.total_distance %>
+</p>
+
+<p>
+  <strong>Total time:</strong>
+  <%= @way.total_time %>
+</p>
+
+<%= link_to 'Edit', edit_way_path(@way) %> |
+<%= link_to 'Back', ways_path %>

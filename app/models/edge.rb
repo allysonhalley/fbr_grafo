@@ -12,17 +12,17 @@ class Edge < ApplicationRecord
   scope :final_d_vertex, -> {where(final_vertex: Vertex.find_by(name: 'D'))}
   scope :final_e_vertex, -> {where(final_vertex: Vertex.find_by(name: 'E'))}
 
-  
+  # All in edges on this vertex
   scope :equal_initial_vertices, -> (vertex) {
     where(initial_vertex_id: vertex)
   }
-
+  # All out edges on this vertex
   scope :equal_final_vertices, -> (vertex) {
     where(final_vertex_id: vertex)
   }
-  
+  #Go to the target vertex
   scope :next_vertex, -> (vertex) {
-    where(final_vertexid: vertex)
+    where(final_vertex_id: vertex)
   }
 
 end
