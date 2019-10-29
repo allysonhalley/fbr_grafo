@@ -5,6 +5,7 @@ class WaysController < ApplicationController
   # GET /ways.json
   def index
     @ways = Way.all
+    # abort @ways.inspect
   end
 
   # GET /ways/1
@@ -62,7 +63,12 @@ class WaysController < ApplicationController
   end
 
   def run_ways    
-    Way.run_ways
+    #Descobre o início      
+    # vertex_in = Vertex.start_vertex
+    #Lista as aresta do vertice    
+    # edges_in = Edge.initial_edges
+    way = Way.new
+    map_ways(way, Edge.initial_edges)    
     redirect_to ways_url, notice: 'Way was successfully destroyed.'
   end
 
@@ -76,4 +82,60 @@ class WaysController < ApplicationController
     def way_params
       params.require(:way).permit(:vertices_list, :edges_list, :total_distance, :total_time)
     end
+    #Segue as aresta escrevendo e fazendo o registro por profundidade
+    def map_ways(way, edges_in)               
+      edges_in.each do |edge|        
+        if(edge.final_vertex.is_end_vertex)
+          register_way = Way.new
+          register_way = way
+          register_way.register_step(edge)   
+          # abort register_way.inspect       
+        else
+          way.register_step(edge)
+          map_ways(way, Edge.next_edges(edge.final_vertex))
+        end
+      end
+    end
+
+    # refazendo o q foi comentado embaixo
+    #################################################    
+      #     if (edge.final_vertex.is_end_vertex)
+      #       # abort way.inspect
+      #       way.register_step(edge)
+      #       way.save
+      #       way = Way.new
+      #     elsif (way.total_distance == 0)
+      #       # abort edge.final_vertex.is_end_vertex.inspect
+      #       # abort way.inspect         
+      #       #escreve um passo
+      #       way.register_step(edge)
+      #       #Recursividade              
+      #       # abort way.inspect  
+      #     else
+      #       abort way.inspect         
+      #       #escreve um passo
+      #       way.register_step(edge)
+      #       #Recursividade              
+      #       # abort way.inspect            
+      #     end
+      # end
+      ## end each edges_in
+      # end
+    ###########################################################  
+    
+    # #Registra cada avanço (aresta)
+    # def write_step(edge)
+    #   "=> #{edge.initial_vertex.name} - #{edge.final_vertex.name}"
+    # end
+    # def sum_time(edge)
+    #     total_time = total_time + edge.time
+    #     total_time
+    # end
+    # def sum_distane(edge)
+    #     total_distance = total_distance + edge.distance
+    #     total_distance
+    # end
+    # def register_steps(way,edge)            
+    #   way.register_step(edge)
+    # end
 end

@@ -1,10 +1,7 @@
 class Graph < ApplicationRecord
 
     def list_ways
-    end
-
-    def next_vertex 
-    end    
+    end 
 
     def start_way
          

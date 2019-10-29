@@ -1,47 +1,27 @@
 class Way < ApplicationRecord
 
-    def self.run_ways        
-        #Descobre o início      
-        vertex_in = Vertex.start_vertex
-        #Lista as aresta do vertice        
-        next_step(vertex_in)
+    after_initialize :default_fill
+    
+    validates :edges_list, presence: true, uniqueness: true
+
+    def default_fill
+        self.vertices_list = ''
+        self.edges_list = ''
+        self.total_distance = 0
+        self.total_time = 0
     end
 
-    #Segue as aresta escrevendo e fazendo o registro por profundidade
-    def self.next_step(vertex_in)
-        edges_list_in = Edge.where(initial_vertex: vertex_in)
-        # beggin each edges_list_in
-        edges_list_in.each do |edge|   
-            way = Way.new
-            way.edges_list = "#{edge.graph.name} #{write_step(edge)}"             
-            if (edge.final_vertex.is_end_vertex)
-                way.register_steps(edge)
-                way.save
-            else
-                #escreve um passo
-                way.register_steps(edge)
-                #Recursividade                
-                next_step(edge.final_vertex)
-            end
-        end
-        ## end each edges_list_in
+    def register_step(edge)    
+        if vertices_list.empty?
+            self.vertices_list = edge.initial_vertex.name
+        end        
+        self.vertices_list = self.vertices_list + "#{edge.final_vertex.name}"
+        if edges_list.empty?
+            self.edges_list = edge.graph.name
+        end        
+        self.edges_list = self.edges_list + " => #{edge.initial_vertex.name} - #{edge.final_vertex.name}"
+        self.total_distance = total_distance + edge.distance
+        self.total_time = total_time + edge.time
+        self.save
     end
-
-    #Registra cada avanço (aresta)
-    def self.write_step(edge)
-        "=> #{edge.initial_vertex.name} - #{edge.final_vertex.name}"
-    end
-    def self.sum_time(edge)
-        total_time = total_time + edge.time
-        total_time
-    end
-    def self.sum_distane(edge)
-        total_distance = total_distance + edge.distance
-        total_distance
-    end
-    def self.register_steps(edge)
-        write_step(edge)
-        sum_time(edge)
-        sum_distane(edge)            
-    end   
 end
