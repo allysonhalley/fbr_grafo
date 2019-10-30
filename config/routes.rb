@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   
   post 'run_algorithmm', to: 'ways#run_algorithmm', as: :run_algorithmm
   post 'run_ways', to: 'ways#run_ways', as: :run_ways
+  post 'reset_ways', to: 'ways#reset_ways', as: :reset_ways
 
   post 'smaller_time', to: 'ways#smaller_time', as: :smaller_time
   post 'smaller_distance', to: 'ways#smaller_distance', as: :smaller_distance

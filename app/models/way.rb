@@ -11,6 +11,13 @@ class Way < ApplicationRecord
         self.total_time = 0
     end
 
+    def change_new_way(way)
+        self.vertices_list = way.vertices_list
+        self.edges_list = way.edges_list
+        self.total_distance = way.total_distance
+        self.total_time = way.total_time
+    end
+
     def register_step(edge)    
         if vertices_list.empty?
             self.vertices_list = edge.initial_vertex.name
