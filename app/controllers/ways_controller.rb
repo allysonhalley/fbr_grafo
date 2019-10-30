@@ -63,6 +63,7 @@ class WaysController < ApplicationController
 
   def run_ways    
     way = Way.new
+    way.default_fill
     map_ways(way, Edge.initial_edges)    
     redirect_to ways_url, notice: 'Way was successfully mapped.'
   end
@@ -87,6 +88,7 @@ class WaysController < ApplicationController
       edges_in.each do |edge|        
         if(edge.final_vertex.is_end_vertex)
           register_way = Way.new
+          register_way.default_fill
           register_way.change_new_way(way)          
           register_way.register_step(edge)
           # abort register_way.inspect   

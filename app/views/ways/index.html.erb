@@ -7,18 +7,16 @@
         <th>Arestas</th>
         <th>Distância</th>
         <th>Tempo</th>
-        <th>Show</th>
       </tr>
     </thead>
     <tbody>
-        <% @ways.each do |way| %>
-      <tr>
-        <td><%= way.vertices_list%></td>
-        <td><%= way.edges_list%></td>
-        <td><%= way.total_distance%></td>
-        <td><%= way.total_time%></td>
-        <td><%= link_to 'Show', way %></td>
-      </tr>
+      <% @ways.each do |way| %>
+        <tr>
+          <td><%= way.vertices_list%></td>
+          <td><%= way.edges_list%></td>
+          <td><%= way.total_distance%></td>
+          <td><%= way.total_time%></td>
+        </tr>
       <% end %>
     </tbody>
   </table>

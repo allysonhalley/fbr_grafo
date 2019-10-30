@@ -1,6 +1,4 @@
 class Way < ApplicationRecord
-
-    after_initialize :default_fill
     
     validates :edges_list, presence: true, uniqueness: true
 
@@ -22,9 +20,9 @@ class Way < ApplicationRecord
         if vertices_list.empty?
             self.vertices_list = edge.initial_vertex.name
         end        
-        self.vertices_list = self.vertices_list + "#{edge.final_vertex.name}"
+        self.vertices_list = (self.vertices_list + "#{edge.final_vertex.name}").to_str
         if edges_list.empty?
-            self.edges_list = edge.graph.name
+            self.edges_list = edge.graph.name.to_str
         end        
         self.edges_list = self.edges_list + " => #{edge.initial_vertex.name} - #{edge.final_vertex.name}"
         self.total_distance = total_distance + edge.distance
