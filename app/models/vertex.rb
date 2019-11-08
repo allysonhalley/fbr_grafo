@@ -17,4 +17,9 @@ class Vertex < ApplicationRecord
         self == Vertex.end_vertex.first
     end
 
+    # Verifica se é o Vértice final
+    def is_start_vertex
+        self == Vertex.start_vertex.first
+    end
+
 end 

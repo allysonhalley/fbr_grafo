@@ -61,10 +61,11 @@ class WaysController < ApplicationController
     end
   end
 
-  def run_ways    
+  def run_ways        
     way = Way.new
     way.default_fill
-    map_ways(way, Edge.initial_edges)    
+    edges_in = Edge.initial_edges
+    map_ways(way, edges_in)
     redirect_to ways_url, notice: 'Way was successfully mapped.'
   end
 
@@ -78,24 +79,37 @@ class WaysController < ApplicationController
     def set_way
       @way = Way.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def way_params
       params.require(:way).permit(:vertices_list, :edges_list, :total_distance, :total_time)
     end
+    
     #Segue as aresta escrevendo e fazendo o registro por profundidade
-    def map_ways(way, edges_in)               
-      edges_in.each do |edge|        
-        if(edge.final_vertex.is_end_vertex)
+    def map_ways(way, edges_in)
+
+      edges_in.each do |edge|
+        if(edge.final_vertex.is_end_vertex)          
           register_way = Way.new
           register_way.default_fill
-          register_way.change_new_way(way)          
-          register_way.register_step(edge)
-          # abort register_way.inspect   
-          # abort register_way.inspect     
-        else
+          register_way.change_new_way(way)
+          # abort register_way.inspect
           way.register_step(edge)
-          map_ways(way, Edge.next_edges(edge.final_vertex))
+          # abort way.inspect
+          # abort register_way.inspect
+        # elsif way.is_continuity(edge)
+        #   way.register_step(edge)          
+        #   # next_edges com falha por hora
+        #   map_ways(way, edge.next_edges)
+        #   abort edge.initial_vertex.inspect
+        else edge.initial_vertex.is_start_vertex
+          # abort edge.inspect
+          way.register_step(edge)
+          # abort edge.next_edges.inspect
+          map_ways(way, edge.next_edges)
+        # else
+        #   # abort edge.inspect  
+        #   way.register_step(edge)
+        #   map_ways(way, edge.next_edges)
         end
       end
     end

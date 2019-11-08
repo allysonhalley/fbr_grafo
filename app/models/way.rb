@@ -9,24 +9,25 @@ class Way < ApplicationRecord
         self.total_time = 0
     end
 
-    def change_new_way(way)
-        self.vertices_list = way.vertices_list
-        self.edges_list = way.edges_list
-        self.total_distance = way.total_distance
-        self.total_time = way.total_time
+    def change_new_way(way)        
+        self.vertices_list = String.new(way.vertices_list.to_s)
+        self.edges_list = String.new(way.edges_list.to_s)
+        self.total_distance = way.total_distance.to_int
+        self.total_time = way.total_time.to_int
     end
 
     def register_step(edge)    
         if vertices_list.empty?
             self.vertices_list = edge.initial_vertex.name
         end        
-        self.vertices_list = (self.vertices_list + "#{edge.final_vertex.name}").to_str
-        if edges_list.empty?
-            self.edges_list = edge.graph.name.to_str
-        end        
-        self.edges_list = self.edges_list + " => #{edge.initial_vertex.name} - #{edge.final_vertex.name}"
-        self.total_distance = total_distance + edge.distance
-        self.total_time = total_time + edge.time
+        self.vertices_list << edge.final_vertex.name        
+        self.edges_list << " => #{edge.step_name}"
+        self.total_distance += edge.distance
+        self.total_time += edge.time
         self.save
+    end
+
+    def is_continuity(edge)        
+        self.vertices_list.include?(edge.initial_vertex.name)
     end
 end
