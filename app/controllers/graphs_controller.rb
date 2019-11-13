@@ -91,6 +91,8 @@ class GraphsController < ApplicationController
     #Segue os caminhos registrando e salvando os passos, tempo e distância
     #Método garante a recursividade e promove percorrer todos os camihos
     def map_ways(vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+      partial_distance = partial_distance
+      partial_time = partial_time
       edges_in = Edge.list_edges(vertex)      
       edges_in.each do |edge|
         #Entra no final do caminho pra salvar
@@ -99,29 +101,31 @@ class GraphsController < ApplicationController
           partial_vertices << edge.initial_vertex.name
           partial_vertices << edge.final_vertex.name
           partial_edges << edge.step_name
-          partial_distance += edge.distance
-          partial_time += edge.time
+          # partial_distance += edge.distance
+          # partial_time += edge.time
           #Cria camiho já com os valores preenchido
           way = Way.new(
             vertices_list: partial_vertices,
             edges_list: partial_edges,
-            total_distance: partial_distance,
-            total_time: partial_time
+            total_distance: partial_distance + edge.distance,
+            total_time: partial_time + edge.time
             )
           #Persiste um caminho totalmente percorrido
           way.save
+          way = Way.new
+          # abort way.inspect
           #Reinicia variáveis
           partial_vertices.clear
           partial_edges.clear
           partial_distance = 0
-          partial_time = 0
+          partial_time = 0          
           #Segue pro próximo laço  
         else
           #Incrementa as variáveis pra serem inseridas e salvas no fundo do caminho
           partial_vertices << edge.initial_vertex.name
           partial_edges << edge.step_name
-          partial_distance += edge.distance
-          partial_time += edge.time
+          partial_distance = partial_distance + edge.distance
+          partial_time = partial_time + edge.time
           #Entra mais um nível em profundididade
           map_ways(edge.final_vertex, partial_vertices, partial_edges, partial_distance, partial_time)
         end
