@@ -10,7 +10,7 @@ class Vertex < ApplicationRecord
         where.not(id: Edge.select(
         :initial_vertex_id).group(
         :initial_vertex_id).all.map(&:initial_vertex_id))
-    }    
+    }
 
     # Verifica se é o Vértice final
     def is_end_vertex

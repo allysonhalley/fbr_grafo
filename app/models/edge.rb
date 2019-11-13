@@ -21,14 +21,18 @@ class Edge < ApplicationRecord
   scope :initial_edges, -> {
     where(initial_vertex_id: Vertex.start_vertex)
   }
+
+  scope :list_edges, -> (vertex) {
+    where(initial_vertex_id: vertex)
+  }
   
-  def next_edges    
+  def next_edges
     Edge.where(initial_vertex: self.final_vertex)
   end
 
   #Return a name to edge
   def step_name
-    "#{initial_vertex.name}#{final_vertex.name}"
+    "=> #{initial_vertex.name}#{final_vertex.name} "
   end
 
 end
