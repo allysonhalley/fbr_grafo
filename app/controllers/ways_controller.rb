@@ -75,10 +75,10 @@ class WaysController < ApplicationController
     redirect_to ways_url, notice: 'Way was successfully mapped.'
   end
 
-  def reset_ways
-    Way.delete_all
-    redirect_to ways_url, notice: 'Way was successfully cleaned.'
-  end
+  # def reset_ways
+  #   Way.delete_all
+  #   redirect_to ways_url, notice: 'Way was successfully cleaned.'
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -92,59 +92,59 @@ class WaysController < ApplicationController
     
     #Segue as aresta escrevendo e fazendo o registro por profundidade
     # def map_ways(way, edges_in)
-    def map_ways(vertex, partial_vertices, partial_edges, partial_distance, partial_time)
-      edges_in = Edge.list_edges(vertex)      
-      edges_in.each do |edge|
-        if(edge.final_vertex.is_end_vertex)
-          # register_way = Way.new
-          # register_way.default_fill
-          # register_way.change_new_way(way)
-          # register_way.register_step(edge)
-          # way.register_step(edge)
-          partial_vertices << edge.initial_vertex.name
-          partial_vertices << edge.final_vertex.name
-          partial_edges << edge.step_name
-          partial_distance += edge.distance
-          partial_time += edge.time
-          # abort edge.final_vertex.inspect          
-          way = Way.new(
-            vertices_list: partial_vertices,
-            edges_list: partial_edges,
-            total_distance: partial_distance,
-            total_time: partial_time
-            )
-          # abort way.inspect
-          way.save
+    # def map_ways(vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+    #   edges_in = Edge.list_edges(vertex)      
+    #   edges_in.each do |edge|
+    #     if(edge.final_vertex.is_end_vertex)
+    #       # register_way = Way.new
+    #       # register_way.default_fill
+    #       # register_way.change_new_way(way)
+    #       # register_way.register_step(edge)
+    #       # way.register_step(edge)
+    #       partial_vertices << edge.initial_vertex.name
+    #       partial_vertices << edge.final_vertex.name
+    #       partial_edges << edge.step_name
+    #       partial_distance += edge.distance
+    #       partial_time += edge.time
+    #       # abort edge.final_vertex.inspect          
+    #       way = Way.new(
+    #         vertices_list: partial_vertices,
+    #         edges_list: partial_edges,
+    #         total_distance: partial_distance,
+    #         total_time: partial_time
+    #         )
+    #       # abort way.inspect
+    #       way.save
           
-          partial_vertices.clear
-          partial_edges.clear
-          partial_distance = 0
-          partial_time = 0
+    #       partial_vertices.clear
+    #       partial_edges.clear
+    #       partial_distance = 0
+    #       partial_time = 0
           
 
-        # abort way.inspect
-        # elsif way.is_continuity(edge)
-        #   way.register_step(edge)          
-        #   # next_edges com falha por hora
-        #   map_ways(way, edge.next_edges)
-        #   abort edge.initial_vertex.inspects        
-        else
-          # edge.initial_vertex.is_start_vertex
-          # abort edge.inspect
-          # way.register_step(edge)
-          # abort edge.next_edges.inspect
-          partial_vertices << edge.initial_vertex.name
-          partial_edges << edge.step_name
-          partial_distance += edge.distance
-          partial_time += edge.time
-          map_ways(edge.final_vertex, partial_vertices, partial_edges, partial_distance, partial_time)
-        # else
-        #   # abort edge.inspect  
-        #   way.register_step(edge)
-        #   map_ways(way, edge.next_edges)
-        end
-      end
-    end
+    #     # abort way.inspect
+    #     # elsif way.is_continuity(edge)
+    #     #   way.register_step(edge)          
+    #     #   # next_edges com falha por hora
+    #     #   map_ways(way, edge.next_edges)
+    #     #   abort edge.initial_vertex.inspects        
+    #     else
+    #       # edge.initial_vertex.is_start_vertex
+    #       # abort edge.inspect
+    #       # way.register_step(edge)
+    #       # abort edge.next_edges.inspect
+    #       partial_vertices << edge.initial_vertex.name
+    #       partial_edges << edge.step_name
+    #       partial_distance += edge.distance
+    #       partial_time += edge.time
+    #       map_ways(edge.final_vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+    #     # else
+    #     #   # abort edge.inspect  
+    #     #   way.register_step(edge)
+    #     #   map_ways(way, edge.next_edges)
+    #     end
+    #   end
+    # end
 
     # def add_step(edge, partial_vertices, partial_edges, partial_distance, partial_time)
     # # def add_step(edge)

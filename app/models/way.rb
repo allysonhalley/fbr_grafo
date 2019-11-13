@@ -2,6 +2,13 @@ class Way < ApplicationRecord
     
     validates :edges_list, presence: true, uniqueness: true
 
+    scope :minor_time, -> {
+        where(total_time: minimum(:total_time))
+    }
+    scope :minor_distance, -> {
+        where(total_distance: minimum(:total_distance))
+    }
+
     def default_fill
         self.vertices_list = ''
         self.edges_list = ''

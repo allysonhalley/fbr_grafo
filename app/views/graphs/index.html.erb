@@ -1,12 +1,44 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Graph  - <%= @graph.name %> </h1>
-<div class='col-md-3'>
-  <%= render 'vertices/auxiliar_list', vertices: @vertices %>
+<div class='col-md-12'>
+  <div class='col-md-2'>
+    <%= render 'vertices/auxiliar_list', vertices: @vertices %>
+  </div>
+  <div class='col-md-8'>
+    <%= render 'edges/auxiliar_list', edges: @edges %>
+  </div>  
+  <div class='col-md-2'>
+      <%=button_to( "Percorrer", :run_ways, class:"btn btn-default btn-sm") %>       
+      <%=button_to( "Reset ways", :reset_ways, class:"btn btn-danger btn-sm") %>   
+  </div>  
 </div>
-<div class='col-md-9'>
-  <%= render 'edges/auxiliar_list', edges: @edges %>
-</div>
-<div>  
-  <%=link_to( "Caminhos", ways_path, class:"btn btn-default btn-sm") %>   
-</div>  
+<% unless @minor_distance.nil?%>
+  <div class='col-md-12'>
+    <div class='col-md-7'>
+      <%= render 'ways/auxiliar_list', ways: @ways %>
+    </div>
+    <div class='col-md-5'>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Menor Distância</th>
+            <th>Menor Tempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="align-content: center;">
+              <%= @minor_distance.total_distance  %>
+              <%= @minor_distance.edges_list  %>
+            </td>
+            <td style="align-content: center;">
+              <%= @minor_time.total_time  %>
+              <%= @minor_time.edges_list  %>              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

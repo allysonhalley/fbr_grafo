@@ -4,9 +4,14 @@ class GraphsController < ApplicationController
   # GET /graphs
   # GET /graphs.json
   def index
+    #Junção de todas as ações em uma só tela 
     @graph = Graph.find_by(name: 'Alpha')    
     @vertices = Vertex.all
-    @edges = Edge.all    
+    @edges = Edge.all
+    @ways = Way.all
+    @minor_time = Way.minor_time.first
+    @minor_distance = Way.minor_distance.first
+
   end
 
   # GET /graphs/1
@@ -63,7 +68,66 @@ class GraphsController < ApplicationController
     end
   end
 
+  #Percorre todos os caminhos
+  def run_ways
+    vertex_in = Vertex.start_vertex
+    #Variáveis local auxiliam durante percurso
+    initial_distance = 0
+    initial_time = 0
+    partial_vertices = ''
+    partial_edges = ''    
+    #Variáveis
+    #Chamada de método para início do percurso
+    map_ways(vertex_in, partial_vertices, partial_edges, initial_distance, initial_time)
+    redirect_to graphs_url, notice: 'Way was successfully mapped.'
+  end
+
+  def reset_ways
+    Way.delete_all
+    redirect_to graphs_url, notice: 'Way was successfully cleaned.'
+  end
+
   private
+    #Segue os caminhos registrando e salvando os passos, tempo e distância
+    #Método garante a recursividade e promove percorrer todos os camihos
+    def map_ways(vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+      edges_in = Edge.list_edges(vertex)      
+      edges_in.each do |edge|
+        #Entra no final do caminho pra salvar
+        if(edge.final_vertex.is_end_vertex)
+          #Salva nos atributos do caminho o valor das variáveis
+          partial_vertices << edge.initial_vertex.name
+          partial_vertices << edge.final_vertex.name
+          partial_edges << edge.step_name
+          partial_distance += edge.distance
+          partial_time += edge.time
+          #Cria camiho já com os valores preenchido
+          way = Way.new(
+            vertices_list: partial_vertices,
+            edges_list: partial_edges,
+            total_distance: partial_distance,
+            total_time: partial_time
+            )
+          #Persiste um caminho totalmente percorrido
+          way.save
+          #Reinicia variáveis
+          partial_vertices.clear
+          partial_edges.clear
+          partial_distance = 0
+          partial_time = 0
+          #Segue pro próximo laço  
+        else
+          #Incrementa as variáveis pra serem inseridas e salvas no fundo do caminho
+          partial_vertices << edge.initial_vertex.name
+          partial_edges << edge.step_name
+          partial_distance += edge.distance
+          partial_time += edge.time
+          #Entra mais um nível em profundididade
+          map_ways(edge.final_vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+        end
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_graph
       @graph = Graph.find(params[:id])
