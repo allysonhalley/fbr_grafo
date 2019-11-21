@@ -12,11 +12,6 @@ class Edge < ApplicationRecord
     where(final_vertex_id: vertex)
   }
 
-  #Return nexte edges from vertex
-  # scope :next_edges, -> (vertex) {
-  #   where(initial_vertex_id: vertex)
-  # }
-
   #Retourn initial edges form initial vertex
   scope :initial_edges, -> {
     where(initial_vertex_id: Vertex.start_vertex)

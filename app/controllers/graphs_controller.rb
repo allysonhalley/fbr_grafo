@@ -69,16 +69,11 @@ class GraphsController < ApplicationController
   end
 
   #Percorre todos os caminhos
-  def run_ways
+  def run_ways            
+    @@stack_edges = Array.new
+    #Variável garante o início do do algorítmo
     vertex_in = Vertex.start_vertex
-    #Variáveis local auxiliam durante percurso
-    initial_distance = 0
-    initial_time = 0
-    partial_vertices = ''
-    partial_edges = ''    
-    #Variáveis
-    #Chamada de método para início do percurso
-    map_ways(vertex_in, partial_vertices, partial_edges, initial_distance, initial_time)
+    map_ways(vertex_in)
     redirect_to graphs_url, notice: 'Way was successfully mapped.'
   end
 
@@ -89,47 +84,54 @@ class GraphsController < ApplicationController
 
   private
     #Segue os caminhos registrando e salvando os passos, tempo e distância
-    #Método garante a recursividade e promove percorrer todos os camihos
-    def map_ways(vertex, partial_vertices, partial_edges, partial_distance, partial_time)
-      partial_distance = partial_distance
-      partial_time = partial_time
+    #Método garante a recursividade e garante percorrer todos os caminhos    
+    def map_ways(vertex)      
       edges_in = Edge.list_edges(vertex)      
       edges_in.each do |edge|
         #Entra no final do caminho pra salvar
         if(edge.final_vertex.is_end_vertex)
           #Salva nos atributos do caminho o valor das variáveis
-          partial_vertices << edge.initial_vertex.name
-          partial_vertices << edge.final_vertex.name
-          partial_edges << edge.step_name
-          # partial_distance += edge.distance
-          # partial_time += edge.time
-          #Cria camiho já com os valores preenchido
-          way = Way.new(
-            vertices_list: partial_vertices,
-            edges_list: partial_edges,
-            total_distance: partial_distance + edge.distance,
-            total_time: partial_time + edge.time
-            )
-          #Persiste um caminho totalmente percorrido
-          way.save
-          way = Way.new
-          # abort way.inspect
-          #Reinicia variáveis
-          partial_vertices.clear
-          partial_edges.clear
-          partial_distance = 0
-          partial_time = 0          
-          #Segue pro próximo laço  
+          @@stack_edges << edge
+          #Cria e salva o caminho
+          create_a_way(@@stack_edges)          
         else
-          #Incrementa as variáveis pra serem inseridas e salvas no fundo do caminho
-          partial_vertices << edge.initial_vertex.name
-          partial_edges << edge.step_name
-          partial_distance = partial_distance + edge.distance
-          partial_time = partial_time + edge.time
           #Entra mais um nível em profundididade
-          map_ways(edge.final_vertex, partial_vertices, partial_edges, partial_distance, partial_time)
+          @@stack_edges << edge
+          map_ways(edge.final_vertex)
         end
       end
+    end
+    
+    # Cria e salva way
+    def create_a_way(stack_edges)
+      partial_vertices = ""      
+      partial_edges = ""
+      partial_distance = 0
+      partial_time = 0
+      stack_edges.each do |edge_push|
+        if edge_push == stack_edges.first
+          partial_vertices << edge_push.initial_vertex.name
+        end
+        partial_vertices << edge_push.final_vertex.name                
+        partial_edges << edge_push.step_name
+        partial_distance += edge_push.distance
+        partial_time += edge_push.time
+      end
+      #Cria e preenche os atributos e way
+      way = Way.new(
+            vertices_list: partial_vertices,
+            edges_list: partial_edges,
+            total_distance: partial_distance,
+            total_time: partial_time
+            )
+      way.save
+      #Reinicia todas as variáveis
+      way.default_fill      
+      partial_vertices.clear
+      partial_edges.clear
+      partial_distance = 0
+      partial_time = 0
+      @@stack_edges.clear
     end
 
     # Use callbacks to share common setup or constraints between actions.
