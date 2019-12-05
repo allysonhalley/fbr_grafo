@@ -13,5 +13,7 @@
 //= require rails-ujs
 //= require jquery.min
 //= require jquery.turbolinks
+//= require react
 //= bootstrap.min
 //= require_tree .
+//= components/board-way.js
