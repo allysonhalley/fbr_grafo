@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   post 'smaller_distance', to: 'ways#smaller_distance', as: :smaller_distance
 
   root to: 'graphs#index'
+
+  namespace :api do
+    namespace :v1 do
+      resources :graphs, only: :index
+    end
+  end
 end

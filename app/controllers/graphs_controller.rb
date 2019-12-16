@@ -11,6 +11,7 @@ class GraphsController < ApplicationController
     @ways = Way.all
     @minor_time = Way.minor_time.first
     @minor_distance = Way.minor_distance.first
+    # render json: Way.all
 
   end
 
